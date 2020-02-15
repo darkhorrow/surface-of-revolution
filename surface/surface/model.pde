@@ -117,7 +117,7 @@ class ButtonCreateShape extends Button {
   public void performAction() {
     translate(width/2, height/2);
     genFigure = createShape();
-    genFigure.beginShape(QUAD_STRIP);
+    genFigure.beginShape(TRIANGLE_STRIP);
     ArrayList<ArrayList<Point3D>> rotatedPoints = new ArrayList<ArrayList<Point3D>>();
     for (int theta = 0; theta <= 360; theta++) {
       rotatedPoints.add(new ArrayList<Point3D>());
