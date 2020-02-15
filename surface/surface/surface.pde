@@ -5,7 +5,7 @@ PShape drawnShape;
 PShape genFigure;
 
 void setup() {
-  size(800, 600, P3D);
+  fullScreen(P3D);
   background(100);
   points = new ArrayList<Point3D>();
   buttons = new ArrayList<Button>();
@@ -24,12 +24,17 @@ void mouseClicked() {
   checkHoverButtons();
 }
 
+void mouseDragged() {
+  
+}
+
 void drawLine() {
   points.add(new Point3D(mouseX - width/2, mouseY - height/2, 0));
   if (points.size() > 1) {
     Point3D prevPoint = points.get(points.size()-2);
     Point3D newPoint = points.get(points.size()-1);
     drawnShape = createShape(LINE, prevPoint.getX(), prevPoint.getY(), newPoint.getX(), newPoint.getY());
+    drawnShape.setStroke(color(255,0,0));
     translate(width/2, height/2);
     shape(drawnShape);
   }
