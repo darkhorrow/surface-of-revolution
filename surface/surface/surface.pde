@@ -1,0 +1,57 @@
+ArrayList<Point3D> points;
+ArrayList<Button> buttons;
+int pointsCount = 0;
+PShape drawnShape;
+PShape genFigure;
+
+void setup() {
+  size(800, 600, P3D);
+  background(100);
+  points = new ArrayList<Point3D>();
+  buttons = new ArrayList<Button>();
+  genFigure = createShape();
+  buttons.add(new ButtonCreateShape(new Position(width - 60, 30), new Dimension(100, 50), "Create shape"));
+  buttons.add(new ButtonCleanShapes(new Position(width - 60, 100), new Dimension(100, 50), "Clear screen"));
+}
+
+void draw() {
+  stroke(255);
+  line(width/2, 0, width/2, height);
+  displayButtons();
+}
+
+void mouseClicked() {
+  checkHoverButtons();
+}
+
+void drawLine() {
+  points.add(new Point3D(mouseX - width/2, mouseY - height/2, 0));
+  if (points.size() > 1) {
+    Point3D prevPoint = points.get(points.size()-2);
+    Point3D newPoint = points.get(points.size()-1);
+    drawnShape = createShape(LINE, prevPoint.getX(), prevPoint.getY(), newPoint.getX(), newPoint.getY());
+    translate(width/2, height/2);
+    shape(drawnShape);
+  }
+}
+
+void displayButtons() {
+  for (Button button : buttons) {
+    button.display();
+  }
+}
+
+void checkHoverButtons() {
+  boolean buttonPressed = false;
+  for (Button button : buttons) {
+    float x = button.getPosition().getX();
+    float y = button.getPosition().getY();
+    float w = button.getDimension().getWidth();
+    float h = button.getDimension().getHeight();
+    if (mouseX >= x - w/2 && mouseX <= x + w/2 && mouseY >= y - h/2 && mouseY <= y + h/2) {
+      button.performAction();
+      buttonPressed = true;
+    }
+  }
+  if (!buttonPressed) drawLine();
+}
