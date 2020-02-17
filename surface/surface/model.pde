@@ -115,6 +115,10 @@ class ButtonCreateShape extends Button {
   }
 
   public void performAction() {
+    LocalDateTime dateTime = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
+    String formattedDate = dateTime.format(format);
+    
     translate(width/2, height/2);
     genFigure = createShape();
     genFigure.beginShape(TRIANGLE_STRIP);
@@ -131,7 +135,7 @@ class ButtonCreateShape extends Button {
         aux.add(new Point3D(x2, y1, z2));
       }
     }
-    
+
     for (int i = 0; i < rotatedPoints.size()-1; i++) {
       boolean isEven = false;
       if (i % 2 == 0) isEven = true;
@@ -153,14 +157,16 @@ class ButtonCreateShape extends Button {
           y2 = rotatedPoints.get(i+1).get(points.size()-1 - j).getY();
           z2 = rotatedPoints.get(i+1).get(points.size()-1 - j).getZ();
         }
-        
+
         genFigure.vertex(x1, y1, z1);
         genFigure.vertex(x2, y2, z2);
       }
     }
     genFigure.endShape(CLOSE);
     lights();
-    shape(genFigure);
+    beginRecord("nervoussystem.obj.OBJExport", "data/" + formattedDate + ".obj");
+    box(100);
+    endRecord();
     points = new ArrayList<Point3D>();
   }
 }
@@ -173,5 +179,27 @@ class ButtonCleanShapes extends Button {
   public void performAction() {
     background(100);
     points = new ArrayList<Point3D>();
+  }
+}
+
+class ButtonLoadShape extends Button {
+  public ButtonLoadShape(Position position, Dimension dimension, String text) {
+    super(position, dimension, text);
+  }
+
+  public void performAction() {
+    background(100);
+    points = new ArrayList<Point3D>();
+    selectInput("Select a .obj shape", "fileSelected", dataFile("data/"));
+  }
+}
+
+void fileSelected(File file) {
+  if (file != null) {
+    println(file.getAbsolutePath());
+    genFigure = loadShape(file.getAbsolutePath());
+    println(genFigure);
+    lights();
+    shape(genFigure);
   }
 }

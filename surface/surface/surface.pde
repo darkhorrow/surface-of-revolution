@@ -1,3 +1,8 @@
+import nervoussystem.obj.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JFileChooser;
+
 ArrayList<Point3D> points;
 ArrayList<Button> buttons;
 int pointsCount = 0;
@@ -5,13 +10,14 @@ PShape drawnShape;
 PShape genFigure;
 
 void setup() {
-  fullScreen(P3D);
+  size(1024, 768, P3D);
   background(100);
   points = new ArrayList<Point3D>();
   buttons = new ArrayList<Button>();
   genFigure = createShape();
   buttons.add(new ButtonCreateShape(new Position(width - 60, 30), new Dimension(100, 50), "Create shape"));
   buttons.add(new ButtonCleanShapes(new Position(width - 60, 100), new Dimension(100, 50), "Clear screen"));
+  buttons.add(new ButtonLoadShape(new Position(width - 60, 170), new Dimension(100, 50), "Load shape"));
 }
 
 void draw() {
@@ -22,10 +28,6 @@ void draw() {
 
 void mouseClicked() {
   checkHoverButtons();
-}
-
-void mouseDragged() {
-  
 }
 
 void drawLine() {
