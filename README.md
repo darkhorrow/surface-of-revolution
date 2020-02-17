@@ -2,6 +2,10 @@
 
 ## Contenidos
 
+* [Autoría](#autoría)
+* [Introducción](#introducción)
+* [Controles](#controles)
+* [Implementación](#implementación)
 
 ## Autoría
 
