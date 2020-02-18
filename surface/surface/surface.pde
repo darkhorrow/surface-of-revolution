@@ -3,6 +3,8 @@ ArrayList<Button> buttons;
 int pointsCount = 0;
 PShape drawnShape;
 PShape genFigure;
+float rotationX = 0;
+float rotationY = 0;
 
 void setup() {
   size(1024, 768, P3D);
@@ -23,6 +25,8 @@ void draw() {
   pushMatrix();
   translate(width/2, height/2);
   lights();
+  genFigure.rotateX(radians(rotationX));
+  genFigure.rotateY(radians(rotationY));
   shape(genFigure);
   popMatrix();
 
@@ -68,4 +72,18 @@ void checkHoverButtons() {
     }
   }
   if (!buttonPressed) points.add(new Point3D(mouseX - width/2, mouseY - height/2, 0));
+}
+
+void keyPressed() {
+  if (keyCode == UP) rotationX = 0.5;
+  if (keyCode == DOWN) rotationX = -0.5;
+  if (keyCode == LEFT) rotationY = 0.5;
+  if (keyCode == RIGHT) rotationY = 0.5;
+}
+
+void keyReleased() {
+  if (keyCode == UP) rotationX = 0;
+  if (keyCode == DOWN) rotationX = 0;
+  if (keyCode == LEFT) rotationY = 0;
+  if (keyCode == RIGHT) rotationY = 0;
 }
