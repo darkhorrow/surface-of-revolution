@@ -115,11 +115,6 @@ class ButtonCreateShape extends Button {
   }
 
   public void performAction() {
-    LocalDateTime dateTime = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy_HH-mm-ss");
-    String formattedDate = dateTime.format(format);
-    
-    translate(width/2, height/2);
     genFigure = createShape();
     genFigure.beginShape(TRIANGLE_STRIP);
     ArrayList<ArrayList<Point3D>> rotatedPoints = new ArrayList<ArrayList<Point3D>>();
@@ -163,10 +158,6 @@ class ButtonCreateShape extends Button {
       }
     }
     genFigure.endShape(CLOSE);
-    lights();
-    beginRecord("nervoussystem.obj.OBJExport", "data/" + formattedDate + ".obj");
-    box(100);
-    endRecord();
     points = new ArrayList<Point3D>();
   }
 }
@@ -178,28 +169,7 @@ class ButtonCleanShapes extends Button {
 
   public void performAction() {
     background(100);
+    genFigure = createShape();
     points = new ArrayList<Point3D>();
-  }
-}
-
-class ButtonLoadShape extends Button {
-  public ButtonLoadShape(Position position, Dimension dimension, String text) {
-    super(position, dimension, text);
-  }
-
-  public void performAction() {
-    background(100);
-    points = new ArrayList<Point3D>();
-    selectInput("Select a .obj shape", "fileSelected", dataFile("data/"));
-  }
-}
-
-void fileSelected(File file) {
-  if (file != null) {
-    println(file.getAbsolutePath());
-    genFigure = loadShape(file.getAbsolutePath());
-    println(genFigure);
-    lights();
-    shape(genFigure);
   }
 }
