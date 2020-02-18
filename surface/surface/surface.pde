@@ -9,6 +9,7 @@ void setup() {
   points = new ArrayList<Point3D>();
   buttons = new ArrayList<Button>();
   genFigure = createShape();
+  drawnShape = createShape();
   buttons.add(new ButtonCreateShape(new Position(width - 60, 30), new Dimension(100, 50), "Create shape"));
   buttons.add(new ButtonCleanShapes(new Position(width - 60, 100), new Dimension(100, 50), "Clear screen"));
 }
@@ -18,13 +19,18 @@ void draw() {
   stroke(255);
   line(width/2, 0, width/2, height);
   displayButtons();
-  
+
   pushMatrix();
   translate(width/2, height/2);
   lights();
   shape(genFigure);
   popMatrix();
-  
+
+  pushMatrix();
+  translate(width/2, height/2);
+  lights();
+  drawLine();
+  popMatrix();
 }
 
 void mouseClicked() {
@@ -33,12 +39,13 @@ void mouseClicked() {
 
 void drawLine() {
   if (points.size() > 1) {
-    Point3D prevPoint = points.get(points.size()-2);
-    Point3D newPoint = points.get(points.size()-1);
-    drawnShape = createShape(LINE, prevPoint.getX(), prevPoint.getY(), newPoint.getX(), newPoint.getY());
-    drawnShape.setStroke(color(255,0,0));
-    translate(width/2, height/2);
-    shape(drawnShape);
+    for (int i = 0; i < points.size() - 1; i++) {
+      Point3D prevPoint = points.get(i);
+      Point3D newPoint = points.get(i+1);
+      drawnShape = createShape(LINE, prevPoint.getX(), prevPoint.getY(), newPoint.getX(), newPoint.getY());
+      drawnShape.setStroke(color(255, 0, 0));
+      shape(drawnShape);
+    }
   }
 }
 
