@@ -77,7 +77,7 @@ void checkHoverButtons() {
 void keyPressed() {
   if (keyCode == UP) rotationX = 0.5;
   if (keyCode == DOWN) rotationX = -0.5;
-  if (keyCode == LEFT) rotationY = 0.5;
+  if (keyCode == LEFT) rotationY = -0.5;
   if (keyCode == RIGHT) rotationY = 0.5;
 }
 
